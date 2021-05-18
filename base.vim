@@ -19,8 +19,7 @@ set shiftwidth=2
 " unicode characters in the file autoload/float.vim
 set encoding=utf-8
 
-" TextEdit might fail if hidden is not set.
-set hidden
+set hidden " hide buffers when abandoned instead of unload
 
 " Some servers have issues with backup files, see #649.
 set nobackup
@@ -66,7 +65,17 @@ else
    noremap <silent><expr> <c-@> coc#refresh()
 endif
 
-
+""" NERDTREE SETUP
+" Remove arrows indicating expand/collapse
+let g:NERDTreeDirArrowExpandable = ''
+let g:NERDTreeDirArrowCollapsible = ''
+let NERDTreeMinimalUI=1  " remove crap
+" Start NERDTree. If a file is specified, move the cursor to its window.
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
 
 """ GENERAL LANGUAGE SETUP {{{
 let g:coc_global_extensions = [

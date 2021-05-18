@@ -1,4 +1,4 @@
-" mappings
+" MAPPINGS
 
 " Set map-leader to space
 nnoremap <SPACE> <Nop>
@@ -12,23 +12,27 @@ call which_key#register(' ', 'g:which_key_map')
 " Time before popup triggers
 set timeoutlen=500
 
-" TODO Would be cool if this could fall back to :Files if not git repo
-nnoremap <silent> <leader><leader> :GitFiles<CR>
+" list files/git files
+nnoremap <expr> <leader><leader> (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<cr>"
 
 """ FILE {{{
 let g:which_key_map.f = { 'name' : '+file' }
 nnoremap <silent> <leader>fs :update<CR>
 let g:which_key_map.f.s = 'save-file'
+nnoremap <silent> <leader>ff :NERDTreeFind<CR>
+""" FILE > EDIT (?)
+let g:which_key_map.f.f = 'reload-vimrc'
 let g:which_key_map.f.e = { 'name' : '+config' }
 nnoremap <silent> <leader>fed :edit $MYVIMRC<CR>
 let g:which_key_map.f.e.d = 'open-vimrc'
 nnoremap <silent> <leader>feR :source $MYVIMRC<CR>
 let g:which_key_map.f.e.R = 'reload-vimrc'
+
 """ }}}
 
 """ GO TO {{{
 let g:which_key_map.g = { 'name': '+go-to' }
-nnoremap <silent> <leader>gh :call CocAction('doHover')<CR>
+nnoremap <silent> <leader>gh :call <SID>show_documentation()<CR>
 let g:which_key_map.g.h = 'do-hover'
 nmap <silent> <leader>gd <Plug>(coc-definition)
 let g:which_key_map.g.d = 'go-to-definition'
@@ -38,6 +42,13 @@ nmap <silent> <leader>gr <Plug>(coc-references)
 let g:which_key_map.g.r = 'go-to-references'
 nmap <silent> <leader>gi <Plug>(coc-implementation)
 let g:which_key_map.g.i = 'go-to-implementation'
+" Remap keys for gotos (without leader)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> gh :call <SID>show_documentation()<CR>
+
 
 nmap <silent> [e <Plug>(coc-diagnostic-prev)
 nmap <silent> ]e <Plug>(coc-diagnostic-next)
@@ -77,9 +88,25 @@ let g:which_key_map['w'] = {
       \ }
 """ }}}
 
-""" PROJECT
+""" PROJECT {{{
 let g:which_key_map.p = { 'name' : '+project' }
 nnoremap <silent> <leader>pd :CocList diagnostics<cr>
 let g:which_key_map.p.d = 'project-diagnostics'
 nnoremap <silent> <space>ps :<C-u>CocList -I symbols<cr>
 let g:which_key_map.p.s = 'project-symbols'
+"""  }}}
+
+""" OPEN {{{
+let g:which_key_map.o = { 'name': '+open' }
+nnoremap <silent> <leader>op :NERDTreeToggle<cr>
+let g:which_key_map.o.p = "open-project-tree"
+" TODO open terminal (never really use terminal from here)
+""" }}}
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction

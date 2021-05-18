@@ -1,0 +1,9 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =7
+let g:netrw_dirhist_7='/home/adamcatman/devel/spronk/packages/scuffed-ui/src/Button'
+let g:netrw_dirhist_6='/home/adamcatman/devel/spronk/packages/scuffed-ui/src'
+let g:netrw_dirhist_5='/home/adamcatman/devel/spronk/packages/scuffed-ui/src/Button'
+let g:netrw_dirhist_4='/home/adamcatman/devel/spronk/packages/scuffed-ui/src'
+let g:netrw_dirhist_3='/home/adamcatman/devel/spronk/packages/scuffed-ui/src/Paragraph'
+let g:netrw_dirhist_2='/home/adamcatman/devel/spronk/packages/scuffed-ui/src'
+let g:netrw_dirhist_1='/home/adamcatman/.config/nvim/plugged'

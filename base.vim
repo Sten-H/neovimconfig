@@ -65,19 +65,27 @@ else
    noremap <silent><expr> <c-@> coc#refresh()
 endif
 
+" === THEME ===
+" let $BAT_THEME='gruvbox-dark'
+let $BAT_THEME='TwoDark'
+"
 """ NERDTREE SETUP
 " Remove arrows indicating expand/collapse
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 let NERDTreeMinimalUI=1  " remove crap
 " Start NERDTree. If a file is specified, move the cursor to its window.
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+autocmd VimEnter * NERDTree | wincmd p
 " Exit Vim if NERDTree is the only window left.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
     \ quit | endif
 
-""" GENERAL LANGUAGE SETUP {{{
+" ===  GENERAL LANGUAGE SETUP ===
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+" FIXME messes up all enter presses in non coc envs
+" inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+
 let g:coc_global_extensions = [
   \ 'coc-tsserver'
   \ ]
@@ -92,4 +100,3 @@ endif
 " Sometimes syntax highlighting can get out of sync in large JSX and TSX files. This was happening too often for me so I opted to enable syntax sync fromstart, which forces vim to rescan the entire buffer when highlighting. This does so at a performance cost, especially for large files. It is significantly faster in Neovim than in vim.
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
-""" }}}

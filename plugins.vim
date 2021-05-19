@@ -15,10 +15,12 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 " Auto close { pairs }
 Plug 'jiangmiao/auto-pairs'
-" TODO add vim-commentary?
-" TODO add matching pairs {}
+" Highlight yanked text
+Plug 'machakann/vim-highlightedyank'
 " File tree panel
 Plug 'preservim/nerdtree'
+" Fancy status bar - Do I evene like this?
+Plug 'vim-airline/vim-airline'
 " Language stuff
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'pangloss/vim-javascript'

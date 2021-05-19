@@ -14,8 +14,12 @@ set timeoutlen=500
 
 " list files/git files
 nnoremap <expr> <leader><leader> (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<cr>"
+" Search file contents
+command! -bang -nargs=*  All
+  \ call fzf#run(fzf#wrap({ 'source': 'rg --files --hidden --no-ignore-vcs --glob "!{build/*,dist/*,node_modules/*,.git/*}"', 'options': ['--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}', '--expect=ctrl-t,ctrl-x,ctrl-v'] }))
+nnoremap <silent> <leader>/ :All<CR>
 
-""" FILE {{{
+""jkFILE {{{
 let g:which_key_map.f = { 'name' : '+file' }
 nnoremap <silent> <leader>fs :update<CR>
 let g:which_key_map.f.s = 'save-file'
@@ -106,7 +110,9 @@ let g:which_key_map.o.p = "open-project-tree"
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
   else
-    call CocAction('doHover')
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction

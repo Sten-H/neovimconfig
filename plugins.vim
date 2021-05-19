@@ -6,6 +6,8 @@ Plug 'rafi/awesome-vim-colorschemes'
 " Fuzzy Find
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+" Uses fzf for cocs lists. Provides better overview and navigation
+Plug 'antoinemadec/coc-fzf', {'branch': 'release'}
 " Nicer netrw
 Plug 'tpope/vim-vinegar'
 " Commands for commenting

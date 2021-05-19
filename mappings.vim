@@ -1,5 +1,15 @@
 " MAPPINGS
 
+" mappings can be hidden like this
+" let g:which_key_map.1 = 'which_key_ignore'
+" let g:which_key_map['_'] = { 'name': 'which_key_ignore' }
+
+" Since the theme of provided statusline is not flexible and all the information has been echoed already, I prefer to hide it.
+autocmd! FileType which_key
+autocmd  FileType which_key set laststatus=0 noshowmode noruler
+  \| autocmd BufLeave <buffer> set laststatus=2 showmode ruler
+let g:which_key_centered = 0
+
 " Set map-leader to space
 nnoremap <SPACE> <Nop>
 let g:mapleader = "\<Space>"
@@ -14,10 +24,12 @@ set timeoutlen=500
 
 " list files/git files
 nnoremap <expr> <leader><leader> (len(system('git rev-parse')) ? ':Files' : ':GFiles')."\<cr>"
+let g:which_key_map.space = "open-file"
 " Search file contents
 command! -bang -nargs=*  All
   \ call fzf#run(fzf#wrap({ 'source': 'rg --files --hidden --no-ignore-vcs --glob "!{build/*,dist/*,node_modules/*,.git/*}"', 'options': ['--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}', '--expect=ctrl-t,ctrl-x,ctrl-v'] }))
 nnoremap <silent> <leader>/ :All<CR>
+let g:which_key_map['/'] = "search-in-files"
 
 " === FILE ===
 let g:which_key_map.f = { 'name' : '+file' }
@@ -35,9 +47,14 @@ let g:which_key_map.f.e.R = 'reload-vimrc'
 " === M-something
 " Thinking this can contain som general language stuff
 let g:which_key_map.m = { 'name': '+code-operations' }
+" show diagnostics for current file
+nnoremap <silent> <leader>cd :CocFzfList diagnostics --current-buf<cr>
 " symbol renaming
 nmap <leader>mn <Plug>(coc-rename)
 let g:which_key_map.m.n =  'rename-symbol'
+" TODO add formating file on mf in normal mode
+" TODO add formating selection on mf in visual mode
+
 " === GO TO ===
 let g:which_key_map.g = { 'name': '+go-to' }
 nnoremap <silent> <leader>gh :call <SID>show_documentation()<CR>
@@ -62,7 +79,7 @@ nmap <silent> [e <Plug>(coc-diagnostic-prev)
 nmap <silent> ]e <Plug>(coc-diagnostic-next)
 
 """ === ERROR ===
-let g:which_key_map.e = { 'name': 'error' }
+let g:which_key_map.e = { 'name': '+error' }
 nmap <leader>ef <Plug>(coc-fix-current)
 let g:which_key_map.e.f = 'fix-current'
 nmap <leader>ea <Plug>(coc-codeaction)
@@ -96,9 +113,9 @@ let g:which_key_map['w'] = {
 
 " === PROJECT ===
 let g:which_key_map.p = { 'name' : '+project' }
-nnoremap <silent> <leader>pd :CocList diagnostics<cr>
+nnoremap <silent> <leader>pd :CocFzfList diagnostics<cr>
 let g:which_key_map.p.d = 'project-diagnostics'
-nnoremap <silent> <space>ps :<C-u>CocList -I symbols<cr>
+nnoremap <silent> <space>ps :<C-u>CocFzfList symbols<cr>
 let g:which_key_map.p.s = 'project-symbols'
 
 " === OPEN ===

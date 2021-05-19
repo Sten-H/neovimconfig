@@ -83,6 +83,7 @@ let $BAT_THEME='TwoDark'
 let g:NERDTreeDirArrowExpandable = ''
 let g:NERDTreeDirArrowCollapsible = ''
 let NERDTreeMinimalUI=1  " remove crap
+let NERDTreeShowHidden=1  " show hidden files/dirs
 " Start NERDTree. If a file is specified, move the cursor to its window.
 autocmd VimEnter * NERDTree | wincmd p
 " Exit Vim if NERDTree is the only window left.

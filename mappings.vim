@@ -19,12 +19,12 @@ command! -bang -nargs=*  All
   \ call fzf#run(fzf#wrap({ 'source': 'rg --files --hidden --no-ignore-vcs --glob "!{build/*,dist/*,node_modules/*,.git/*}"', 'options': ['--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}', '--expect=ctrl-t,ctrl-x,ctrl-v'] }))
 nnoremap <silent> <leader>/ :All<CR>
 
-""jkFILE {{{
+" === FILE ===
 let g:which_key_map.f = { 'name' : '+file' }
 nnoremap <silent> <leader>fs :update<CR>
 let g:which_key_map.f.s = 'save-file'
 nnoremap <silent> <leader>ff :NERDTreeFind<CR>
-""" FILE > EDIT (?)
+" === FILE --> EDIT 
 let g:which_key_map.f.f = 'reload-vimrc'
 let g:which_key_map.f.e = { 'name' : '+config' }
 nnoremap <silent> <leader>fed :edit $MYVIMRC<CR>
@@ -32,9 +32,13 @@ let g:which_key_map.f.e.d = 'open-vimrc'
 nnoremap <silent> <leader>feR :source $MYVIMRC<CR>
 let g:which_key_map.f.e.R = 'reload-vimrc'
 
-""" }}}
-
-""" GO TO {{{
+" === M-something
+" Thinking this can contain som general language stuff
+let g:which_key_map.m = { 'name': '+code-operations' }
+" symbol renaming
+nmap <leader>mn <Plug>(coc-rename)
+let g:which_key_map.m.n =  'rename-symbol'
+" === GO TO ===
 let g:which_key_map.g = { 'name': '+go-to' }
 nnoremap <silent> <leader>gh :call <SID>show_documentation()<CR>
 let g:which_key_map.g.h = 'do-hover'
@@ -56,9 +60,8 @@ nnoremap <silent> gh :call <SID>show_documentation()<CR>
 
 nmap <silent> [e <Plug>(coc-diagnostic-prev)
 nmap <silent> ]e <Plug>(coc-diagnostic-next)
-""" }}}
 
-""" ERROR {{{
+""" === ERROR ===
 let g:which_key_map.e = { 'name': 'error' }
 nmap <leader>ef <Plug>(coc-fix-current)
 let g:which_key_map.e.f = 'fix-current'
@@ -68,8 +71,8 @@ nmap <silent>]e <Plug>(coc-diagnostic-next)
 let g:which_key_map.e.n = 'next-error'
 nmap <silent>[e <Plug>(coc-diagnostic-prev)
 let g:which_key_map.e.p = 'prev-error'
-""" }}}
-""" WINDOW {{{
+
+" === WINDOW ===
 let g:which_key_map['w'] = {
       \ 'name' : '+windows' ,
       \ 'w' : ['<C-W>w'     , 'other-window']          ,
@@ -90,22 +93,19 @@ let g:which_key_map['w'] = {
       \ 'v' : ['<C-W>v'     , 'split-window-below']    ,
       \ '?' : ['Windows'    , 'fzf-window']            ,
       \ }
-""" }}}
 
-""" PROJECT {{{
+" === PROJECT ===
 let g:which_key_map.p = { 'name' : '+project' }
 nnoremap <silent> <leader>pd :CocList diagnostics<cr>
 let g:which_key_map.p.d = 'project-diagnostics'
 nnoremap <silent> <space>ps :<C-u>CocList -I symbols<cr>
 let g:which_key_map.p.s = 'project-symbols'
-"""  }}}
 
-""" OPEN {{{
+" === OPEN ===
 let g:which_key_map.o = { 'name': '+open' }
 nnoremap <silent> <leader>op :NERDTreeToggle<cr>
 let g:which_key_map.o.p = "open-project-tree"
 " TODO open terminal (never really use terminal from here)
-""" }}}
 
 function! s:show_documentation()
   if (index(['vim','help'], &filetype) >= 0)

@@ -30,18 +30,23 @@ command! -bang -nargs=*  All
   \ call fzf#run(fzf#wrap({ 'source': 'rg --files --hidden --no-ignore-vcs --glob "!{build/*,dist/*,node_modules/*,.git/*}"', 'options': ['--preview', '~/.config/nvim/plugged/fzf.vim/bin/preview.sh {}', '--expect=ctrl-t,ctrl-x,ctrl-v'] }))
 nnoremap <silent> <leader>/ :All<CR>
 let g:which_key_map['/'] = "search-in-files"
-
-" === FILE ===
+" Flip to prev buffer of window
+nnoremap <silent> <leader><TAB> :edit #<CR>
+let g:which_key_map["<Tab>"] = "prev-buffer"
+"" === FILE ===
 let g:which_key_map.f = { 'name' : '+file' }
 nnoremap <silent> <leader>fs :update<CR>
 let g:which_key_map.f.s = 'save-file'
 nnoremap <silent> <leader>ff :NERDTreeFind<CR>
 " === FILE --> EDIT 
-let g:which_key_map.f.f = 'reload-vimrc'
+let g:which_key_map.f.f = 'show-in-tree'
 let g:which_key_map.f.e = { 'name' : '+config' }
 nnoremap <silent> <leader>fed :edit $MYVIMRC<CR>
 let g:which_key_map.f.e.d = 'open-vimrc'
 nnoremap <silent> <leader>feR :source $MYVIMRC<CR>
+" nnoremap <leader>feR :call <SID>source_config()<CR>
+
+
 let g:which_key_map.f.e.R = 'reload-vimrc'
 
 " === M-something
@@ -132,4 +137,9 @@ function! s:show_documentation()
   else
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
+endfunction
+
+function! s:source_config()
+  source $MYVIMRC
+  echo "Config successfully reloaded"
 endfunction

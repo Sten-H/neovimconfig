@@ -3,6 +3,7 @@ call plug#begin()
 Plug 'liuchengxu/vim-which-key'
 " Fancy colors
 Plug 'rafi/awesome-vim-colorschemes'
+Plug 'ayu-theme/ayu-vim'
 " Fuzzy Find
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'

@@ -6,7 +6,11 @@ set rnu            " use relative line number
 set smartcase      " if no case is used it is case insensitive
 set incsearch      " seaches on each input
 set termguicolors  " enable fancy colors from the future?
-colorscheme one    " SET THEME
+" === THEME SETTINGS ===
+let $BAT_THEME='gruvbox-dark'
+" This is a setting that only affects the ayu theme (which variant)
+let ayucolor="mirage" " for mirage version of theme
+colorscheme ayu    " SET THEME
 filetype plugin indent on
 " On pressing tab, insert 2 spaces
 set expandtab
@@ -73,11 +77,10 @@ if has('nvim')
 else
    noremap <silent><expr> <c-@> coc#refresh()
 endif
+" Seems to be some annoying bug where the floating windows aren't cleared
+" sometimes. Might perhaps be fixed by updating nvim
+nmap <silent><Esc> :call coc#float#close_all() <CR>
 
-" === THEME ===
-" let $BAT_THEME='gruvbox-dark'
-let $BAT_THEME='TwoDark'
-"
 """ NERDTREE SETUP
 " Remove arrows indicating expand/collapse
 let g:NERDTreeDirArrowExpandable = ''
